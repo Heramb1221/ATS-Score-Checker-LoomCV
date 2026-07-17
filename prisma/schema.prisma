@@ -1,0 +1,29 @@
+// This database stores ONLY Path A (LoomCV-linked) results.
+// Path B (anonymous uploads) is deliberately NEVER written here — see the
+// "Anonymous storage boundedness" NFR in the blueprint. Persisting anonymous
+// results server-side would be an unbounded growth vector with no natural
+// attribution or cleanup path. Anonymous results live in the browser's
+// localStorage only (see hooks/useAtsAnalysis.ts).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AtsAnalysis {
+  id          String   @id @default(cuid())
+  resumeId    String // references LoomCV's resume by ID — no local FK, separate DB
+  userId      String
+  jdHash      String // sha256 of the job description text
+  matchScore  Int
+  confidence  Int
+  resultJson  Json
+  createdAt   DateTime @default(now())
+
+  @@unique([resumeId, jdHash])
+  @@index([userId])
+}
