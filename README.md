@@ -17,7 +17,7 @@
 
 | Resource | Link |
 |---|---|
-| ATS Scorer Service (Live App) | [Live Demo](https://loom-cv-ats-scorer.vercel.app/) |
+| ATS Scorer Service (Live App) | [Live Demo](https://ats-score-checker-loom-cv.vercel.app/) |
 
 ---
 
